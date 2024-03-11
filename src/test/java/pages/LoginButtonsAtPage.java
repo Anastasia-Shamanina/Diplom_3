@@ -1,4 +1,4 @@
-package PageObject;
+package pages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -112,4 +112,12 @@ public class LoginButtonsAtPage {
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(loginForm));
     }
+
+    private By header = By.className("AppHeader_header__logo__2D0X2");
+    @Step("Появление хедера")
+    public void displayedHeader() {
+        new WebDriverWait(driver, 3)
+                .until(ExpectedConditions.visibilityOfElementLocated(header));
+    }
+
 }

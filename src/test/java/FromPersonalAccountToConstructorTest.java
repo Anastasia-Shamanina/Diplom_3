@@ -1,15 +1,12 @@
-import PageObject.LoginButtonsAtPage;
-import PageObject.MainPage;
-import PageObject.PersonalAccount;
+import pages.LoginButtonsAtPage;
+import pages.MainPage;
+import pages.PersonalAccount;
 import browser.Browser;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import methods.BaseHttpClient;
 import methods.UserMethods;
 import org.junit.After;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.Test;
 import org.junit.Before;
 import io.qameta.allure.junit4.DisplayName;
@@ -22,7 +19,6 @@ import static org.junit.Assert.assertEquals;
 
 // Тесты на Переход в личный кабинет и Переход из личного кабинета в конструктор
 public class FromPersonalAccountToConstructorTest extends Browser {
-
 
     private String email = "ivanovanastia_6@gmail.com";
     private String password = "123456";
@@ -52,8 +48,7 @@ public class FromPersonalAccountToConstructorTest extends Browser {
 
         // Ожидание пока не появится хэдер
         LoginButtonsAtPage loginButtonsAtPage = new LoginButtonsAtPage(driver);
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("AppHeader_header__logo__2D0X2")));
+        loginButtonsAtPage.displayedHeader();
         driver.manage().window().maximize();
 
         // Авторизация

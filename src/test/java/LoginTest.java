@@ -1,4 +1,4 @@
-import PageObject.LoginButtonsAtPage;
+import pages.LoginButtonsAtPage;
 import browser.Browser;
 import io.qameta.allure.Description;
 import io.restassured.RestAssured;
@@ -6,9 +6,6 @@ import io.restassured.response.Response;
 import methods.BaseHttpClient;
 import methods.UserMethods;
 import org.junit.After;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.Test;
 import org.junit.Before;
 import io.qameta.allure.junit4.DisplayName;
@@ -49,15 +46,14 @@ public class LoginTest extends Browser {
 
         // Ожидание пока не появится хэдер
         LoginButtonsAtPage loginButtonsAtPage = new LoginButtonsAtPage(driver);
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("AppHeader_header__logo__2D0X2")));
+        loginButtonsAtPage.displayedHeader();
         driver.manage().window().maximize();
     }
 
     @Test
     @DisplayName("Вход по кнопке 'Войти в аккаунт'")
     @Description("Вход по кнопке 'Войти в аккаунт' -> 'Войти' (кнопка в форме входа)")
-    public void loginTest1() {
+    public void loginTestButtonLoginInAccount() {
         LoginButtonsAtPage objLoginButtonsAtPage = new LoginButtonsAtPage(driver);
         objLoginButtonsAtPage.clickLoginInAccountButton();
         objLoginButtonsAtPage.login(email, password);
@@ -69,7 +65,7 @@ public class LoginTest extends Browser {
     @Test
     @DisplayName("Вход через кнопку в форме восстановления пароля")
     @Description("Вход по кнопке 'Войти в аккаунт' -> 'Восстановить пароль' -> кнопка 'Войти'")
-    public void loginTest2() {
+    public void loginTestButtonRestorePassword() {
         LoginButtonsAtPage objLoginButtonsAtPage = new LoginButtonsAtPage(driver);
         objLoginButtonsAtPage.clickLoginInAccountButton();
         objLoginButtonsAtPage.clickRestorePasswordButton();
@@ -83,7 +79,7 @@ public class LoginTest extends Browser {
     @Test
     @DisplayName("Вход через кнопку в форме регистрации")
     @Description("Вход по кнопке 'Войти в аккаунт' -> 'Зарегистрироваться' -> кнопка 'Войти'")
-    public void loginTest3() {
+    public void loginTestButtonLoginInRegistrationForm() {
         LoginButtonsAtPage objLoginButtonsAtPage = new LoginButtonsAtPage(driver);
         objLoginButtonsAtPage.clickLoginInAccountButton();
         objLoginButtonsAtPage.clickRegistrationLink();
@@ -98,7 +94,7 @@ public class LoginTest extends Browser {
     @Test
     @DisplayName("Вход по кнопке 'Личный кабинет'")
     @Description("Вход по кнопке 'Личный кабинет' -> 'Войти' (кнопка в форме входа)")
-    public void loginTest4() {
+    public void loginTestButtonPersonalAccount() {
         LoginButtonsAtPage objLoginButtonsAtPage = new LoginButtonsAtPage(driver);
         objLoginButtonsAtPage.clickPersonalAccountButton();
         objLoginButtonsAtPage.login(email, password);

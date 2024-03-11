@@ -1,11 +1,8 @@
-import PageObject.LoginButtonsAtPage;
-import PageObject.MainPage;
+import pages.LoginButtonsAtPage;
+import pages.MainPage;
 import browser.Browser;
 import io.qameta.allure.Description;
 import org.junit.After;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.Test;
 import org.junit.Before;
 import io.qameta.allure.junit4.DisplayName;
@@ -21,8 +18,7 @@ public class SectionConstructorTest extends Browser {
 
         // Ожидание пока не появится хэдер
         LoginButtonsAtPage loginButtonsAtPage = new LoginButtonsAtPage(driver);
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("AppHeader_header__logo__2D0X2")));
+        loginButtonsAtPage.displayedHeader();
         driver.manage().window().maximize();
     }
 

@@ -1,12 +1,9 @@
-import PageObject.LoginButtonsAtPage;
+import pages.LoginButtonsAtPage;
 import browser.Browser;
 import io.restassured.response.Response;
 import methods.UserMethods;
 import org.junit.After;
-import PageObject.RegistrationPage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.RegistrationPage;
 import org.junit.Test;
 import org.junit.Before;
 import io.qameta.allure.junit4.DisplayName;
@@ -26,12 +23,11 @@ public class RegistrationTest extends Browser {
 
     @Before
     public void openSite() {
-
         driver.get(URL_BURGERS);
 
         // Ожидание пока не появится хэдер
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.className("AppHeader_header__logo__2D0X2")));
+        LoginButtonsAtPage loginButtonsAtPage = new LoginButtonsAtPage(driver);
+        loginButtonsAtPage.displayedHeader();
         driver.manage().window().maximize();
     }
 
