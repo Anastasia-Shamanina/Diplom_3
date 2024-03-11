@@ -1,5 +1,6 @@
 package PageObject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,21 +19,18 @@ public class PersonalAccount {
     // Кнопка "Выход"
     private By exitButton = By.xpath("//*[text()='Выход']");
 
+    @Step("Нажимаем на кнопку 'Выход'")
     public void clickExitButton() {
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(exitButton)).click();
 
     } //после выхода отображается форма входа
 
-
     // Раздел "Профиль"
     private By profileSection = By.xpath(".//a[text()='Профиль']");
-    private boolean isDisplayed(By profileSection) {
-        return true;
-    }
-    public void displayedProfileSection() {
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.visibilityOfElementLocated(profileSection));
-        assertEquals(isVisible, isDisplayed(profileSection));
+
+    @Step("Извлекаем текст из элемента 'Профиль'")
+    public String displayedProfileSection() {
+        return driver.findElement(profileSection).getText();
     }
 }

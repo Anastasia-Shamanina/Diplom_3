@@ -1,9 +1,8 @@
 import PageObject.LoginButtonsAtPage;
 import PageObject.MainPage;
-import forBrowser.Browser;
+import browser.Browser;
 import io.qameta.allure.Description;
 import org.junit.After;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,14 +11,12 @@ import org.junit.Before;
 import io.qameta.allure.junit4.DisplayName;
 
 import static constants.Url.URL_BURGERS;
+import static org.junit.Assert.assertEquals;
 
-public class SectionConstructorTest {
-    private WebDriver driver;
+public class SectionConstructorTest extends Browser {
 
     @Before
     public void openSite() {
-        driver = Browser.getWebDriver("chrome");
-        /*driver = Browser.getWebDriver("yandex");*/
         driver.get(URL_BURGERS);
 
         // Ожидание пока не появится хэдер
@@ -36,7 +33,8 @@ public class SectionConstructorTest {
         MainPage objMainPage = new MainPage(driver);
         objMainPage.clickSaucesSectionButton(); //дефолтно открывается раздел булки, сначала сделан переход на другой раздел
         objMainPage.clickBunSectionButton();
-        objMainPage.displayedTextBunSection();
+        String textSection = objMainPage.getTextSection();
+        assertEquals("Булки", textSection);
     }
 
     @Test
@@ -45,7 +43,8 @@ public class SectionConstructorTest {
     public void saucesSectionTest() {
         MainPage objMainPage = new MainPage(driver);
         objMainPage.clickSaucesSectionButton();
-        objMainPage.displayedTextSaucesSection();
+        String textSection = objMainPage.getTextSection();
+        assertEquals("Соусы", textSection);
     }
 
     @Test
@@ -54,7 +53,8 @@ public class SectionConstructorTest {
     public void fillingSectionTest() {
         MainPage objMainPage = new MainPage(driver);
         objMainPage.clickFillinпSectionButton();
-        objMainPage.displayedTextFillingSection();
+        String textSection = objMainPage.getTextSection();
+        assertEquals("Начинки", textSection);
     }
 
     @After

@@ -1,24 +1,22 @@
 import PageObject.LoginButtonsAtPage;
-import forBrowser.Browser;
-import io.restassured.RestAssured;
+import browser.Browser;
 import io.restassured.response.Response;
+import methods.UserMethods;
 import org.junit.After;
 import PageObject.RegistrationPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.Test;
 import org.junit.Before;
 import io.qameta.allure.junit4.DisplayName;
 import io.qameta.allure.Description;
+import pojo.User;
 
 import static constants.Url.URL_BURGERS;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class RegistrationTest {
-
-    private WebDriver driver;
+public class RegistrationTest extends Browser {
 
     private String email = "ivanovanastia_6@gmail.com";
     private String password = "123456";
@@ -28,10 +26,7 @@ public class RegistrationTest {
 
     @Before
     public void openSite() {
-        RestAssured.baseURI = URL_BURGERS; // для api
 
-        driver = Browser.getWebDriver("chrome");
-      /*  driver = Browser.getWebDriver("yandex");*/
         driver.get(URL_BURGERS);
 
         // Ожидание пока не появится хэдер
@@ -55,12 +50,13 @@ public class RegistrationTest {
 
         // Удаляем аккаунт через API
         User user = new User(email, password, name);
-        Response responseAccessToken = user.loginUser();
+        UserMethods userMethods = new UserMethods();
+        Response responseAccessToken = userMethods.loginUser(user);
         responseAccessToken.then().assertThat().body("accessToken", notNullValue())
                 .and()
                 .statusCode(200);
         this.accessToken = responseAccessToken.body().jsonPath().getString("accessToken");
-        user.deleteUser(accessToken);
+        userMethods.deleteUser(accessToken);
     }
 
     // Тест с не корректным паролем (менее 6 цифер)
